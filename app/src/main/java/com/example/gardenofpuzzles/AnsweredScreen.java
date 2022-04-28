@@ -37,9 +37,14 @@ public class AnsweredScreen extends AppCompatActivity {
         if (ans==1){
             backButton.setText("Yay!");
             message.setText("Congradulations! You got that one correct!");
-        } else {
+        } else if (ans==0) {
             backButton.setText("Okay");
             message.setText("Uh Oh! Looks like you got that one incorrect.");
+        } else {
+            //tells the user if they have done all the puzzles of puzType - reuse of screen, there
+                //was no need to make a new activity
+            backButton.setText("Okay");
+            message.setText("Looks like you've already completed all of these puzzles!");
         }
 
         //this button just takes us back to the main menu

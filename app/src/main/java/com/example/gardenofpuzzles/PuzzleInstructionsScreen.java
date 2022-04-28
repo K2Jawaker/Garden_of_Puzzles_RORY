@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class PuzzleInstructionsScreen extends AppCompatActivity {
     Button okButton;
     TextView instructions, title;
-    int curPuzCode;
+    int curPuzType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +25,15 @@ public class PuzzleInstructionsScreen extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.screen_puzzle_instructions);
         Intent intent = getIntent();
-        curPuzCode = intent.getIntExtra("PUZCODE",0);
+        curPuzType = intent.getIntExtra("PUZTYPE",0);
         getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.bkrdColor));
-
+        //buttons and views
         okButton=findViewById(R.id.okButton);
         instructions=findViewById(R.id.instructions);
         title=findViewById(R.id.puzName);
 
         //based on the puzzle code, we display the title and detailed instructions
-        switch (curPuzCode){
+        switch (curPuzType){
             case 1:     //Chess
                 title.setText("Chess Question");
                 instructions.setText("An image of a chessboard will be given to you, and a question " +
@@ -80,7 +80,8 @@ public class PuzzleInstructionsScreen extends AppCompatActivity {
         okButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PuzzleOptionsScreen.class);
+                intent.putExtra("PUZTYPE", curPuzType);
                 startActivity(intent);
             }
         });

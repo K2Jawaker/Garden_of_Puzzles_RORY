@@ -2,6 +2,8 @@
 
 package com.example.gardenofpuzzles;
 
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,6 +13,7 @@ public class MultipleChoiceQuestion extends PuzzleActivity implements Parcelable
     String incorrectAnswers[]=new String[3];
 
     //constructor
+    public MultipleChoiceQuestion(int pc){puzzleCode=pc;}
     public MultipleChoiceQuestion(int pt, int pc, String quest, String ca, String ica1,
                                        String ica2, String ica3){
         puzzleType=pt;
@@ -21,7 +24,6 @@ public class MultipleChoiceQuestion extends PuzzleActivity implements Parcelable
         incorrectAnswers[1]=ica2;
         incorrectAnswers[2]=ica3;
     }
-
     //getters
     public String getCorrect(){
         return correctAnswer;
@@ -87,6 +89,7 @@ public class MultipleChoiceQuestion extends PuzzleActivity implements Parcelable
             updatePuzzle(true);
             return true;
         } else {
+            updatePuzzle(false);
             return false;
         }
     }

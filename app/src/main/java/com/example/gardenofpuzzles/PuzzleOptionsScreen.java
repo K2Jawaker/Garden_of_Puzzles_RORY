@@ -1,3 +1,4 @@
+//Accessed from the main activity - allows user to play a puzzle, view instructions, or go back
 package com.example.gardenofpuzzles;
 
 import android.content.Intent;
@@ -12,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class PuzzleOptionsScreen extends AppCompatActivity {
     Button playBut,instBut,backBut;
     TextView title,desc;
-    int curPuzCode;
+    int curPuzType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -24,7 +25,7 @@ public class PuzzleOptionsScreen extends AppCompatActivity {
         setContentView(R.layout.options_screen_puzzle);
         getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.bkrdColor));
         Intent intent = getIntent();
-        curPuzCode = intent.getIntExtra("PUZCODE",0);
+        curPuzType = intent.getIntExtra("PUZTYPE",0);
 
         //buttons and textviews
         playBut = findViewById(R.id.playButton);
@@ -34,7 +35,7 @@ public class PuzzleOptionsScreen extends AppCompatActivity {
         desc = findViewById(R.id.puzDesc);
 
         //based on the puzzle code passed from MainActivity, we set the title and description
-        switch (curPuzCode){
+        switch (curPuzType){
             case 1:     //Chess
                 title.setText("Chess Question");
                 desc.setText("Look at the chessboard image and answer the question");
@@ -73,7 +74,10 @@ public class PuzzleOptionsScreen extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(getApplicationContext(),MultipleChoicePuzzle.class);
-                MultipleChoiceQuestion question = MainActivity.getQuestion(1);
+                if (MainActivity.getAttempted(curPuzType)==5){
+                    MainActivity.resetAttempted(curPuzType);
+                }
+                MultipleChoiceQuestion question = MainActivity.getQuestion(curPuzType);
                 intent.putExtra("QUESTION", question);
                 startActivity(intent);
             }
@@ -84,7 +88,7 @@ public class PuzzleOptionsScreen extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(getApplicationContext(),PuzzleInstructionsScreen.class);
-                intent.putExtra("PUZCODE", curPuzCode);
+                intent.putExtra("PUZTYPE", curPuzType);
                 startActivity(intent);
             }
         });
